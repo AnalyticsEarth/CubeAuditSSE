@@ -1,0 +1,10 @@
+version: '3'
+services:
+  cubeauditsse:
+    image: analyticsearth/cubeauditsse
+    deploy:
+      replicas: 1
+    ports:
+      - "50055:50055/tcp"
+    volumes:
+      - filelog:/data/cube  

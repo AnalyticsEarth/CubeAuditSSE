@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using NLog;
 using System.Configuration;
+using System.Threading;
 
 namespace CubeAuditSSE
 {
@@ -73,16 +74,24 @@ namespace CubeAuditSSE
                 server.Start();
                 Logger.Info($"gRPC listening on port {grpcPort}");
 
-                Logger.Info("Press any key to stop gRPC server and exit...");
+                //Logger.Info("Press any key to stop gRPC server and exit...");
 
-                Console.ReadKey();
-                server.ShutdownAsync().Wait();
+                try {
+                      while(true) {
+                        Thread.Sleep(10000);
+                      }
+                    } finally {
+                      Logger.Info("Shutting down Connector");
+                      server.ShutdownAsync().Wait();
+
+                    }
+                
             }
             else
             {
-                Logger.Info("Press any key to exit...");
+                //Logger.Info("Press any key to exit...");
 
-                Console.ReadKey();
+                //Console.ReadKey();
             }
 
         }

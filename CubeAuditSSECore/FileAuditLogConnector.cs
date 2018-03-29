@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Runtime.InteropServices;
 
 
 namespace CubeAuditSSE
@@ -16,7 +17,14 @@ namespace CubeAuditSSE
         {
             var appSettings = ConfigurationManager.AppSettings;
 
-            fileFolder = appSettings["fileLogFolder"];
+            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+            if(isWindows){
+                fileFolder = appSettings["fileLogFolderWindows"];
+            }else{
+                fileFolder = appSettings["fileLogFolderLinux"];
+            }
+            
             pattern = Convert.ToInt32(appSettings["fileLogPattern"]);
         }
         public override bool LogRequest(Guid g, string appId, string userId)

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  cubeauditsse:
+    build: .
+    image: analyticsearth/cubeauditsse
+    ports:
+      - "50055:50055/tcp"
+      
