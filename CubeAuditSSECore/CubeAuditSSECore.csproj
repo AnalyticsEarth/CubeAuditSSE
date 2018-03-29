@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;centos.7-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="GrpcSettings.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.5.1" />
+    <PackageReference Include="Grpc.Core" Version="1.10.0" />
+    <PackageReference Include="NLog" Version="4.5.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ProtobufGenerated\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
