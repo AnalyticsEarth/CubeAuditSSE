@@ -3,8 +3,11 @@ services:
   cubeauditsse:
     image: analyticsearth/cubeauditsse
     deploy:
-      replicas: 1
+      mode: global
     ports:
       - "50055:50055/tcp"
     volumes:
       - filelog:/data/cube  
+
+volumes:
+  filelog:
