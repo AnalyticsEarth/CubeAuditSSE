@@ -102,7 +102,7 @@ namespace CubeAuditSSE
         private Row LogRow(AuditLogConnector logConnector, Guid g, String appId, String userId, string strData, string returnData)
         {
             var resultRow = new Row();
-            Logger.Trace($"     {g} : {strData}");
+            //Logger.Trace($"     {g} : {strData}");
             resultRow.Duals.Add(new Dual { StrData = returnData });
             logConnector.LogData(g, strData);
             return resultRow;
@@ -111,7 +111,7 @@ namespace CubeAuditSSE
         private Row LogRow(AuditLogConnector logConnector, Guid g, String appId, String userId, double numData, string returnData)
         {
             var resultRow = new Row();
-            Logger.Trace($"     {g} : {numData.ToString()}");
+            //Logger.Trace($"     {g} : {numData.ToString()}");
             resultRow.Duals.Add(new Dual { StrData = returnData });
             logConnector.LogData(g, numData.ToString());
             return resultRow;
@@ -120,7 +120,7 @@ namespace CubeAuditSSE
         private Row LogRow(AuditLogConnector logConnector, Guid g, String appId, String userId, string strData, double returnData)
         {
             var resultRow = new Row();
-            Logger.Trace($"     {g} : {strData}");
+            //Logger.Trace($"     {g} : {strData}");
             resultRow.Duals.Add(new Dual { NumData = returnData });
             logConnector.LogData(g, strData);
             return resultRow;
@@ -129,7 +129,7 @@ namespace CubeAuditSSE
         private Row LogRow(AuditLogConnector logConnector, Guid g, String appId, String userId, double numData, double returnData)
         {
             var resultRow = new Row();
-            Logger.Trace($"     {g} : {numData.ToString()}");
+            //Logger.Trace($"     {g} : {numData.ToString()}");
             resultRow.Duals.Add(new Dual { NumData = returnData });
             logConnector.LogData(g, numData.ToString());
             return resultRow;
@@ -138,7 +138,7 @@ namespace CubeAuditSSE
         private Guid LogRequest(AuditLogConnector logConnector, String appId, String userId)
         {
             Guid g = Guid.NewGuid();
-            Logger.Trace($"{DateTime.Now} Log Request Here with GUID: {g}");
+            //Logger.Trace($"{DateTime.Now} Log Request Here with GUID: {g}");
             logConnector.LogRequest(g, appId, userId);
             logConnector.StartLogData(g, appId, userId);
             return g;
@@ -151,6 +151,13 @@ namespace CubeAuditSSE
             if (logType == "file")
             {
                 logConnector = new FileAuditLogConnector();
+            }
+            if (logType == "dynamodb")
+            {
+                logConnector = new DynamodbAuditLogConnector();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                logConnector.ConfigureAsync();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
 
             Dictionary<String, String> headerInfo = TraceServerCallContext(context);

@@ -8,16 +8,30 @@ using Grpc.Core;
 using NLog;
 using System.Configuration;
 using System.Threading;
+using Prometheus;
 
 namespace CubeAuditSSE
 {
+    static class CubeAuditMetrics
+    {
+        public static MetricServer MetricServer;
+        public static readonly Gauge UpGauge = Metrics.CreateGauge("CubeAuditSSE_IsLogging", "Specifies whether logging is enabled or not, based up error status of the logging connector. 1: Enabled, 0: Disabled");
+    }
+
     class Program
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        
 
         static void Main(string[] args)
         {
+
+            CubeAuditMetrics.MetricServer = new MetricServer(19345);
+            CubeAuditMetrics.MetricServer.Start();
+
+            CubeAuditMetrics.UpGauge.Set(1);
+
+
+
             Logger.Info(
                 $"{Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)} uses NLog. Set log level by adding or changing logger rules in NLog.config, setting minLevel=\"Info\" or \"Debug\" or \"Trace\".");
 

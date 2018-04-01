@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prometheus;
 
 namespace CubeAuditSSE
 {
@@ -12,6 +13,8 @@ namespace CubeAuditSSE
 
     public abstract class AuditLogConnector
     {
+        public static bool isLogging = true;
+
         public static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public abstract bool LogRequest(Guid g, string appId, string userId);
@@ -29,6 +32,8 @@ namespace CubeAuditSSE
             var user = splitUserId[1].Substring(8);
             return $"{directory}_{user}";
         }
+
+        public abstract Task ConfigureAsync();
 
     }
 }

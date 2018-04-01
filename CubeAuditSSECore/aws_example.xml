@@ -1,0 +1,5 @@
+<aws>
+  <key name="accesskey"></key>
+  <key name="secretkey"></key>
+  <region>eu-west-2</region>
+</aws>

@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Runtime.InteropServices;
-
+using System.Threading.Tasks;
 
 namespace CubeAuditSSE
 {
@@ -61,6 +61,10 @@ namespace CubeAuditSSE
             return true;
         }
 
+        public override async Task ConfigureAsync()
+        {
+
+        }
 
     }
 }

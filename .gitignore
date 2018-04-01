@@ -2,3 +2,4 @@ CubeAuditSSECore/bin
 CubeAuditSSECore/obj
 .vs
 CubeAuditSSECore/credentials
+/CubeAuditSSECore/aws.xml
