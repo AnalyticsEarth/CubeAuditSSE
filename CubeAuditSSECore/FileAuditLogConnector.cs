@@ -26,6 +26,7 @@ namespace CubeAuditSSE
             }
             
             pattern = Convert.ToInt32(appSettings["fileLogPattern"]);
+            setLoggingStatus(true);
         }
         public override bool LogRequest(Guid g, string appId, string userId)
         {

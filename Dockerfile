@@ -15,4 +15,5 @@ WORKDIR /root/
 COPY --from=builder /root/src/app/cubeauditsse/CubeAuditSSECore/published .
 
 EXPOSE 50055/tcp
+EXPOSE 19345/tcp
 CMD ["dotnet","./CubeAuditSSECore.dll"]

@@ -42,11 +42,11 @@ namespace CubeAuditSSE
                 responseDict.Add("request_timestamp", new AttributeValue { S = DateTime.UtcNow.ToString() });
                 responseDict.Add("userid", new AttributeValue { S = GetShortUserId(userId) });
                 responseDict.Add("appid", new AttributeValue { S = appId });
-                CubeAuditMetrics.UpGauge.Set(1);
+                setLoggingStatus(true);
             }
             else
             {
-                CubeAuditMetrics.UpGauge.Set(0);
+                setLoggingStatus(false);
             }
             
             

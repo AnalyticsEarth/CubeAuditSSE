@@ -25,12 +25,25 @@ namespace CubeAuditSSE
         static void Main(string[] args)
         {
 
-            CubeAuditMetrics.MetricServer = new MetricServer(19345);
-            CubeAuditMetrics.MetricServer.Start();
+            var appSettings = ConfigurationManager.AppSettings;
 
-            CubeAuditMetrics.UpGauge.Set(1);
+            try
+            {
+                var enableMetricEndpoint = Convert.ToBoolean(appSettings["enableMetricEndpoint"]);
+                var metricEndpointPort = Convert.ToInt32(appSettings["metricEndpointPort"]);
 
-
+                if (enableMetricEndpoint)
+                {
+                    CubeAuditMetrics.MetricServer = new MetricServer(metricEndpointPort);
+                    CubeAuditMetrics.MetricServer.Start();
+                    Logger.Info($"Metric Service listening on port:{metricEndpointPort}");
+                    CubeAuditMetrics.UpGauge.Set(1);
+                }      
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"ERROR: {e.Message}");
+            }
 
             Logger.Info(
                 $"{Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)} uses NLog. Set log level by adding or changing logger rules in NLog.config, setting minLevel=\"Info\" or \"Debug\" or \"Trace\".");
@@ -38,7 +51,7 @@ namespace CubeAuditSSE
             Logger.Info(
                 $"Changes to NLog config are immediately reflected in running application, unless you change the setting autoReload=\"true\".");
 
-            var appSettings = ConfigurationManager.AppSettings;
+            
 
             var grpcHost = appSettings["grpcHost"];
             var grpcPort = Convert.ToInt32(appSettings["grpcPort"]);

@@ -15,6 +15,12 @@ namespace CubeAuditSSE
     {
         public static bool isLogging = true;
 
+        public static void setLoggingStatus(bool status)
+        {
+            isLogging = status;
+            CubeAuditMetrics.UpGauge.Set(Convert.ToDouble(status));
+        }
+
         public static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public abstract bool LogRequest(Guid g, string appId, string userId);
